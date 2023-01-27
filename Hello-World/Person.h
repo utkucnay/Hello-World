@@ -5,12 +5,14 @@
 class Person
 {
 public:
-	Person();
-
+	Person() = delete;
+	Person(Person&&) = delete;
+	Person(std::string name, std::string surName, float age);
 
 
 public:
-	std::string name;
-	float age;
+	std::string _name;
+	std::string _surName;
+	float _age;
 };
 

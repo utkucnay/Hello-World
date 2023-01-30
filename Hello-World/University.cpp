@@ -2,7 +2,7 @@
 
 #include "University.h"
 
-University::University(const std::string& name, const std::string& degree, const DegreeType& degreeType) :
+University::University(const std::string& name, const std::string& degree, const EDegreeType& degreeType) :
 	School(name)
 {
 	_degree = degree;

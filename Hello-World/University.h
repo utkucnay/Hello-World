@@ -6,7 +6,7 @@ class University :
     public School
 {
 public:
-    enum DegreeType : uint8_t
+    enum EDegreeType : uint8_t
     {
         kAssociateDegree,
         kBachelorDegree,
@@ -15,10 +15,10 @@ public:
     };
 
 public:
-    University(const std::string& name, const std::string& degree, const DegreeType& degreeType);
+    University(const std::string& name, const std::string& degree, const EDegreeType& degreeType);
 
 public:
     std::string     _degree;
-    DegreeType      _degreeType;
+    EDegreeType      _degreeType;
 };
 

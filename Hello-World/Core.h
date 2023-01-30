@@ -1,8 +1,17 @@
 #pragma once
 
 #include <iostream>
-#include <vector>
-#include <array>
-#include <algorithm>
-#include <string>
 #include <memory>
+#include <utility>
+#include <algorithm>
+#include <functional>
+
+#include <string>
+#include <sstream>
+#include <array>
+#include <vector>
+#include <unordered_map>
+#include <unordered_set>
+
+#include "FlagHelper.h"
+#include "DateTime.h"

@@ -1,4 +1,8 @@
-﻿  Person.cpp
+﻿  Games.cpp
+  Hobby.cpp
+  Person.cpp
   main.cpp
+C:\Dev\Hello-World\Hello-World\main.cpp(7,63): warning C4305: 'bağımsız değişken': 'int' iken 'char' olarak kesildi
+C:\Dev\Hello-World\Hello-World\main.cpp(7,58): warning C4309: 'bağımsız değişken': sabit değer kesildi
   Kod Üretiliyor...
   Hello-World.vcxproj -> C:\Dev\Hello-World\x64\Debug\Hello-World.exe

@@ -12,6 +12,7 @@ concept ConceptHobby  = std::is_base_of<Hobby, T>::value;
 class Person
 {
 public:
+	Person() = default;
 	Person(const std::string& name, const std::string& surName,const float& age, const DateTime& dateOfBirth);
 public:
 	template<ConceptHobby T>
@@ -35,6 +36,8 @@ public:
 		_schools.push_back(school);
 	}
 	std::vector<std::shared_ptr<School>>*	GetSchools();
+
+	void									Deserialization(Json::Value& root);
 public:
 	std::string								_name;
 	std::string								_surName;

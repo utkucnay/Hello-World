@@ -3,98 +3,88 @@
 #include "Games.h"
 #include "Movies.h"
 #include "University.h"
-#include "json/json.h"
 
 int main() {
 	
-	std::ifstream jsonfile(PATH_TO_JSON "mainCharacter.json");
 	Json::Value root;
-	
+	std::ifstream jsonfile(PATH_TO_JSON "mainCharacter.json");
 	jsonfile >> root;
-
 	jsonfile.close();
 
-	Person mainCharacter(root["name"].asString(), root["surName"].asString(), root["age"].asInt(),
-		DateTime(root["DateTime"]["day"].asInt(), root["DateTime"]["month"].asInt(), root["DateTime"]["year"].asInt()));
-
-	{
-		int length = root["Hobbies"].size();
-		for (int i = 0; i < length; i++)
-		{
-			switch (root["Hobbies"][i]["classType"].asInt())
-			{
-			case 1:
-			{
-				Hobby hobby(root["Hobbies"][i]["name"].asString());
-
-				mainCharacter.AddHobby(std::move(hobby));
-			}
-				break;
-			case 2:
-			{
-				Games games(root["Hobbies"][i]["name"].asString());
-
-				int favHobbiesLength = root["Hobbies"][i]["favHobbies"].size();
-
-				for (int index = 0; index < favHobbiesLength; index++)
-				{
-					games.AddGame(root["Hobbies"][i]["favHobbies"][index].asString());
-				}
-				
-				mainCharacter.AddHobby(std::move(games));
-			}
-				break;
-			case 4:
-			{
-				Movies movies(root["Hobbies"][i]["name"].asString());
-
-				int favHobbiesLength = root["Hobbies"][i]["favHobbies"].size();
-
-				for (int index = 0; index < favHobbiesLength; index++)
-				{
-					movies.AddFavMovie(root["Hobbies"][i]["favHobbies"][index].asString());
-				}
-
-				mainCharacter.AddHobby(std::move(movies));
-			}
-				break;
-			default:
-				std::cout << "Error not found classType at Json Deseriliaze";
-				break;
-			}
-
-			
-		}
-	}
-
-	{
-		mainCharacter.AddSchool(University("Bakircay", "Computer Engineer", University::kBachelorDegree));
-	}
+	Person mainCharacter;
+	mainCharacter.Deserialization(root);
 
 	std::stringstream message;
 
 	message << "Hello," << std::endl;
 	message << "My name is " << mainCharacter._name << " " << mainCharacter._surName << ". ";
 	message << "I am " << mainCharacter._age << " years old. ";
-	message << "I born at " << mainCharacter._dateOfBirth._year << "/" << mainCharacter._dateOfBirth._day << "/" << mainCharacter._dateOfBirth._month;
-	std::cout << message.str();
+	message << "I was born on " << std::format("{:02d}.{:02d}.{:04d}." ,mainCharacter._dateOfBirth._month, mainCharacter._dateOfBirth._day, mainCharacter._dateOfBirth._year);
+	message << std::endl;
 
+	message << "Hobbies:" << std::endl;
 	for (auto i = 0; i < mainCharacter.GetHobbies()->size(); i++)
 	{
+		message << std::format("{:d}. Hobby: ", i + 1);
+		message << mainCharacter.GetHobbies()->at(i)->_hobbyName;
 		if (FlagHelper::IsFlag(mainCharacter.GetHobbies()->at(i).get()->_inherinceData, Hobby::kGames))
 		{
 			auto games = static_cast<Games*>(mainCharacter.GetHobbies()->at(i).get());
-			//std::cout << games->GetGames()->at(0);
+			int gamesLength = games->GetGames()->size();
+			for (int FavGamesIndex = 0; FavGamesIndex < gamesLength; FavGamesIndex++)
+			{
+				message << std::endl << '\t' << games->GetGames()->at(FavGamesIndex);
+			}
+			
 		}
 		if (FlagHelper::IsFlag(mainCharacter.GetHobbies()->at(i).get()->_inherinceData, Hobby::kMovies))
 		{
-			auto games = static_cast<Movies*>(mainCharacter.GetHobbies()->at(i).get());
-			//std::cout << games->GetFavMovie()->at(0);
+			auto movies = static_cast<Movies*>(mainCharacter.GetHobbies()->at(i).get());
+			int moviesLength = movies->GetFavMovie()->size();
+			for (int FavMoviesIndex = 0; FavMoviesIndex < moviesLength; FavMoviesIndex++)
+			{
+				message << std::endl << '\t' << movies->GetFavMovie()->at(FavMoviesIndex);
+			}
 		}
+
+		message << std::endl;
 	}
 
-	auto univercity = static_cast<University*>(mainCharacter.GetSchools()->at(0).get());
-	//std::cout << univercity->_degree;
+	message << "Schools:" << std::endl;
 
+	for (auto i = 0; i < mainCharacter.GetSchools()->size(); i++)
+	{
+		message << std::format("{:d}. School: ", i + 1);
+		message << mainCharacter.GetSchools()->at(i)->_name;
+		if (FlagHelper::IsFlag(mainCharacter.GetSchools()->at(i).get()->_InherienceTree, School::kUniversity))
+		{
+			auto university = static_cast<University*>(mainCharacter.GetSchools()->at(i).get());
+			message << " " << university->_degree;
+			switch (university->_degreeType)
+			{
+			case University::kBachelorDegree:
+				message << " " << "Bachelor's Degree";
+				break;
+			case University::kAssociateDegree:
+				message << " " << "Associate's Degree";
+				break;
+			case University::kGraduateDegree:
+				message << " " << "Graduate's Degree";
+				break;
+			case University::kProfessionalDegree:
+				message << " " << "Professional's Degree";
+				break;
+			default:
+				message << " " << "Undefined Degree";
+				break;
+			}
+		}
+
+		message << std::endl;
+	}
+	
+	message << "Thank you for compile this project";
+
+	std::cout << message.str();
 	return 0;
 }

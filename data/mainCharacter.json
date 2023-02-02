@@ -1,0 +1,60 @@
+{
+  "name": "Utkucan",
+  "surName": "Ay",
+  "age": 23,
+  "DateTime": {
+    "year": 2000,
+    "month": 7,
+    "day": 6
+  },
+  "Hobbies": [
+    {
+      "classType": 1,
+      "name": "RolePlay",
+      "favHobbies": [
+      ]
+    },
+    {
+      "classType": 1,
+      "name": "BaseBall",
+      "favHobbies": [
+      ]
+    },
+    {
+      "classType": 2,
+      "name": "Trading Card Game",
+      "favHobbies": [
+        "Yu-Gi-Oh!",
+        "MTG Arena"
+      ]
+    },
+    {
+      "classType": 2,
+      "name": "Computer Game",
+      "favHobbies": [
+        "Zelda Breath of the Wild",
+        "God Of War",
+        "Assasin's Creed 2",
+        "Batman Arkham Series"
+      ]
+    },
+    {
+      "classType": 4,
+      "name": "Movies",
+      "favHobbies": [
+        "Butterfly Effect",
+        "Dead Poets Society",
+        "12 Angry Man",
+        "Batman Dark Knight"
+      ]
+    }
+  ],
+  "School": [
+    {
+      "classType": 2,
+      "name": "Bakircay",
+      "degree": "Computer Engineer",
+      "degreeType": 1
+    }
+  ]
+}
